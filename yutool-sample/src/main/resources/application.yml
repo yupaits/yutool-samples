@@ -1,0 +1,105 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    dynamic:
+      primary: yutool_sample
+      datasource:
+        yutool_sample:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/yutool_sample?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+          username: root
+          password: password
+        yutool_test:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/yutool_test?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+          username: root
+          password: password
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+      shutdown-timeout: 100ms
+    password:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  mail:
+    host:
+    port:
+    username:
+    password:
+    test-connection: false
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enabled: true
+      mail.smtp.starttls.required: true
+  freemarker:
+    check-template-location: false
+
+mybatis-plus:
+  typeEnumsPackage: com.yupaits.yutool.**
+
+cache:
+  enabled: true
+  key-prefix: sample
+  bloom-filter-enabled: false
+
+# Swagger接口文档配置
+api:
+  version: v1.0.0
+  contactName: yupaits
+  contactUrl: https://github.com/yupaits
+  contactEmail: ts495606653@hotmail.com
+  termsOfServiceUrl:
+  license: MIT License
+  licenseUrl: https://github.com/yupaits/yutool/blob/master/LICENSE
+  title: yutool示例
+  description: yutool示例应用
+  basePackage: com.yupaits.sample.yutool
+  groups:
+    - name: test
+      title: 测试分组
+      description: 仅供测试
+      basePackage: com.yupaits.sample.yutool.controller
+      contactName: yupaits
+      contactUrl: https://github.com/yupaits
+      contactEmail: ts495606653@hotmail.com
+
+# FastDFS配置
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  tracker-list:
+    - localhost:22122
+
+## IM推送配置，网易云信
+#netease:
+#  yunxin:
+#    appKey:
+#    appSecret:
+
+## APP通知推送配置，个推
+#getui:
+#  appId:
+#  appKey:
+#  masterSecret:
+#  useSsl:
+#  offlineExpireTime:
+#  appPushSpeed:
+
+## 短信发送配置，电信
+#ct:
+#  sms:
+#    eprId:
+#    userId:
+#    userPassword:

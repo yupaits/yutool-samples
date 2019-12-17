@@ -1,0 +1,16 @@
+server:
+  port: 8132
+
+spring:
+  application:
+    name: order-service
+
+mysql:
+  server:
+    ip: 127.0.0.1
+    port: 3306
+  db:
+    name: seata_sample
+  user:
+    name: root
+    password: sql123

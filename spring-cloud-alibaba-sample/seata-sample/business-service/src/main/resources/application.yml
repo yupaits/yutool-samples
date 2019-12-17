@@ -1,0 +1,6 @@
+server:
+  port: 8130
+
+spring:
+  application:
+    name: business-service

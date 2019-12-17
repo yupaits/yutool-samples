@@ -1,0 +1,8 @@
+server:
+  port: 8010
+
+app:
+  id: apollo-test
+
+apollo:
+  meta: http://localhost:8080

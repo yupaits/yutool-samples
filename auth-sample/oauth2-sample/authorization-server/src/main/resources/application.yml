@@ -1,0 +1,29 @@
+server:
+  port: 8091
+  servlet:
+    context-path: /auth
+    session:
+      cookie:
+        name: auth-session
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8090/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+spring:
+  application:
+    name: authorization-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/auth_sample?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: sql123
+  thymeleaf:
+    cache: false
+
+mybatis-plus:
+  typeEnumsPackage: com.yupaits.yutool.**

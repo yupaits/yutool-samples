@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <title>授权 | OAuth2示例客户端</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6" style="margin-top: 6rem;">
+      <div class="card" style="width: 32rem;">
+        <div class="card-body">
+          <a class="btn btn-light btn-sm float-right" href="/web/logout">注销登录</a>
+          <a class="btn btn-light btn-sm mr-2 float-right" href="/web">返回首页</a>
+          <h5 class="card-title">安全页</h5>
+          <p>
+            <p>欢迎您, <span th:text="${#authentication.name}">无名氏</span></p>
+            <br/>
+            <p>Token：<span th:text="${#authentication.details.tokenValue}">token value.</span></p>
+            <br/>
+            拥有权限：
+            <div th:each="authority, stat : ${#authentication.authorities}">
+              <div th:text="${stat.count} + '. ' + ${authority}"></div>
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>
+</body>
+</html>

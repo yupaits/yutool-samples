@@ -1,0 +1,23 @@
+server:
+  port: 8093
+  servlet:
+    context-path: /web
+    session:
+      cookie:
+        name: web-session
+
+spring:
+  thymeleaf:
+    cache: false
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      client-id: PostClient
+      client-secret: post-secret
+      access-token-uri: http://localhost:8091/auth/oauth/token
+      user-authorization-uri: http://localhost:8091/auth/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:8091/auth/user

@@ -1,0 +1,29 @@
+server:
+  port: 8110
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/auth_sample?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: sql123
+
+mybatis-plus:
+  typeEnumsPackage: com.yupaits.yutool.**
+
+api:
+  version: v1.0.0
+  contactName: yupaits
+  contactUrl: https://github.com/yupaits
+  contactEmail: ts495606653@hotmail.com
+  termsOfServiceUrl:
+  license: MIT License
+  licenseUrl: https://github.com/yupaits/yutool/blob/master/LICENSE
+  title: Spring-Security-JWT示例
+  description: Spring-Security-JWT示例应用
+  basePackage: com.yupaits.sample
+
+#jwt:
+#  secret:
+#  expired-in:
+#  auth-header:

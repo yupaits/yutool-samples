@@ -1,0 +1,14 @@
+server:
+  port: 8060
+
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:1800/xxl-job-admin
+    executor:
+      appname: xxl-job-sample
+      ip:
+      port: 0
+      logpath: /logs/xxl-job-sample/jobhandler
+      logretentiondays: -1
+    accessToken:

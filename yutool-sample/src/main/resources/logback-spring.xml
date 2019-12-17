@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+    <property name="appName" value="yutool-sample"/>
+    <property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} - [${appName}] - ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %c - %m%n"/>
+
+    <appender name="amqp" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
+        <host>localhost</host>
+        <port>5672</port>
+        <username>guest</username>
+        <password>guest</password>
+        <applicationId>yutool-sample</applicationId>
+        <routingKeyPattern>logstash</routingKeyPattern>
+        <declareExchange>true</declareExchange>
+        <exchangeType>direct</exchangeType>
+        <exchangeName>yutool-sample.log</exchangeName>
+        <generateId>true</generateId>
+        <maxSenderRetries>2</maxSenderRetries>
+        <charset>UTF-8</charset>
+        <durable>true</durable>
+        <deliveryMode>PERSISTENT</deliveryMode>
+        <layout>
+            <pattern>${logPattern}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="stdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${logPattern}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="asyncStdoutAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <appender-ref ref="stdoutAppender"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="amqp"/>
+        <appender-ref ref="asyncStdoutAppender"/>
+    </root>
+</configuration>
