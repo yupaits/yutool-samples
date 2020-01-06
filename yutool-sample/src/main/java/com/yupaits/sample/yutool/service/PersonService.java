@@ -1,15 +1,15 @@
 package com.yupaits.sample.yutool.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yupaits.sample.yutool.model.Person;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
 import com.yupaits.yutool.orm.base.BaseDto;
+import com.yupaits.yutool.orm.base.BaseQuery;
 import com.yupaits.yutool.orm.base.BaseVo;
 import com.yupaits.yutool.orm.base.IBaseService;
-import com.yupaits.yutool.orm.support.AggregateProps;
+import com.yupaits.yutool.orm.support.PageQuery;
 import com.yupaits.yutool.orm.support.VoProps;
 
 import java.util.Collection;
@@ -23,23 +23,14 @@ import java.util.List;
 public interface PersonService extends IBaseService {
 
     /**
-     * 根据QueryWrapper获取Vo分页信息
-     * @param page 分页参数
-     * @param queryWrapper QueryWrapper对象
+     * 获取分页数据
+     * @param page 当前页码
+     * @param size 每页数量
+     * @param pageQuery 分页查询对象
      * @param <Vo> Vo类型
-     * @return Vo分页信息
+     * @return 分页数据
      */
-    <Vo extends BaseVo> Result<IPage<Vo>> resultPage(IPage<Person> page, Wrapper<Person> queryWrapper);
-
-    /**
-     * 根据QueryWrapper和AggregateProps获取携带聚合数据的Vo分页信息
-     * @param page 分页参数
-     * @param queryWrapper QueryWrapper对象
-     * @param aggregateProps AggregateProps对象
-     * @param <Vo> Vo类型
-     * @return 携带聚合数据的Vo分页信息
-     */
-    <Vo extends BaseVo> Result<IPage<Vo>> resultPage(IPage<Person> page, Wrapper<Person> queryWrapper, AggregateProps aggregateProps);
+    <Vo extends BaseVo, Q extends BaseQuery<Person>> Result<IPage<Vo>> resultPage(int page, int size, PageQuery<Q> pageQuery);
 
     /**
      * 根据QueryWrapper获取Vo对象列表
@@ -134,7 +125,7 @@ public interface PersonService extends IBaseService {
      * @return 保存的Vo对象
      * @throws BusinessException 抛出BusinessException
      */
-    <Dto extends BaseDto> Result resultUpdateDto(Dto updateDto, QueryWrapper<Person> queryWrapper) throws BusinessException;
+    <Dto extends BaseDto> Result resultUpdateDto(Dto updateDto, Wrapper<Person> queryWrapper) throws BusinessException;
 
     /**
      * 批量更新Dto
@@ -144,7 +135,7 @@ public interface PersonService extends IBaseService {
      * @return 批量更新结果
      * @throws BusinessException 抛出BusinessException
      */
-    <Dto extends BaseDto> Result resultUpdateBatchDto(Collection<Dto> dtos, QueryWrapper<Person> queryWrapper) throws BusinessException;
+    <Dto extends BaseDto> Result resultUpdateBatchDto(Collection<Dto> dtos, Wrapper<Person> queryWrapper) throws BusinessException;
 
     /**
      * 根据ID删除
@@ -165,5 +156,5 @@ public interface PersonService extends IBaseService {
      * @param queryWrapper queryWrapper查询对象
      * @return 删除结果
      */
-    Result resultDelete(QueryWrapper<Person> queryWrapper);
+    Result resultDelete(Wrapper<Person> queryWrapper);
 }

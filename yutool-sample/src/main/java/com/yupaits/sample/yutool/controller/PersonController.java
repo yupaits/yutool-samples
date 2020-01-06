@@ -1,34 +1,30 @@
 package com.yupaits.sample.yutool.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.google.common.collect.Lists;
 import com.yupaits.sample.yutool.dto.PersonCreate;
 import com.yupaits.sample.yutool.dto.PersonDto;
 import com.yupaits.sample.yutool.dto.PersonUpdate;
 import com.yupaits.sample.yutool.model.Person;
+import com.yupaits.sample.yutool.query.PersonQuery;
 import com.yupaits.sample.yutool.service.PersonService;
 import com.yupaits.sample.yutool.vo.HumanVo;
 import com.yupaits.sample.yutool.vo.PersonVo;
 import com.yupaits.yutool.cache.annotation.EvictCache;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
-import com.yupaits.yutool.orm.support.AggregateProps;
-import com.yupaits.yutool.orm.support.PageQuery;
-import com.yupaits.yutool.orm.support.VoBuilder;
-import com.yupaits.yutool.orm.support.VoProps;
+import com.yupaits.yutool.orm.support.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 人类 Controller
@@ -53,39 +49,20 @@ public class PersonController {
     @PostMapping("/page")
     public Result<IPage<PersonVo>> getPersonPage(@RequestParam(required = false, defaultValue = "1") int page,
                                                  @RequestParam(required = false, defaultValue = "10") int size,
-                                                 @RequestBody(required = false) PageQuery pageQuery) {
-        Page<Person> pager = new Page<>(page, size);
-        pageQuery.collate();
-        if (CollectionUtils.isNotEmpty(pageQuery.getOrders())) {
-            pager.setOrders(pageQuery.getOrders());
-        }
-        QueryWrapper<Person> wrapper = new QueryWrapper<>();
-        if (MapUtils.isNotEmpty(pageQuery.getQuery())) {
-            pageQuery.getQuery().forEach((key, value) -> {
-                if (StringUtils.equals(key, "name")) {
-                    wrapper.eq("name", value);
-                }
-            });
-        }
-        if (CollectionUtils.isNotEmpty(pageQuery.getAggregates())) {
-            AggregateProps aggregateProps = new AggregateProps();
-            aggregateProps.setAggregates(pageQuery.getAggregates());
-            return personService.resultPage(pager, wrapper, aggregateProps);
-        }
-        return personService.resultPage(pager, wrapper);
+                                                 OrderItem[] orders,
+                                                 AggregateField[] aggregateFields,
+                                                 PersonQuery personQuery) {
+        PageQuery<PersonQuery> pageQuery = new PageQuery<>();
+        pageQuery.setOrders(Lists.newArrayList(orders));
+        pageQuery.setAggregates(Lists.newArrayList(aggregateFields));
+        pageQuery.setQuery(personQuery);
+        return personService.resultPage(page, size, pageQuery);
     }
 
     @ApiOperation("获取人类列表")
     @PostMapping("/list")
-    public Result<List<PersonVo>> getPersonList(@RequestBody(required = false) Map<String, Object> query) {
-        QueryWrapper<Person> wrapper = new QueryWrapper<>();
-        if (MapUtils.isNotEmpty(query)) {
-            query.forEach((key, value) -> {
-                if (StringUtils.equals(key, "name")) {
-                    wrapper.eq("name", value);
-                }
-            });
-        }
+    public Result<List<PersonVo>> getPersonList(PersonQuery personQuery) {
+        Wrapper<Person> wrapper = personQuery.buildNewQuery();
         return personService.resultList(wrapper);
     }
 

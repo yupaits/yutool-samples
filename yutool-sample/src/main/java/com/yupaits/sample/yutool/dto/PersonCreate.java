@@ -1,5 +1,7 @@
 package com.yupaits.sample.yutool.dto;
 
+import com.yupaits.yutool.commons.exception.BusinessException;
+import com.yupaits.yutool.commons.result.ResultCode;
 import com.yupaits.yutool.orm.base.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,9 +29,10 @@ public class PersonCreate extends BaseDto<Long> {
     @ApiModelProperty(value = "性别")
     private Byte gender;
 
-    @ApiModelProperty(hidden = true)
     @Override
-    public boolean isValid() {
-        return StringUtils.isNotBlank(name);
+    public void checkValid() throws BusinessException {
+        if (StringUtils.isBlank(name)) {
+            throw BusinessException.from(ResultCode.PARAMS_ERROR, true, "姓名不能为空");
+        }
     }
 }

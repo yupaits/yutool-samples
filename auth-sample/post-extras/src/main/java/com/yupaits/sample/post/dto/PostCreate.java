@@ -1,5 +1,7 @@
 package com.yupaits.sample.post.dto;
 
+import com.yupaits.yutool.commons.exception.BusinessException;
+import com.yupaits.yutool.commons.result.ResultCode;
 import com.yupaits.yutool.orm.base.BaseDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,9 +26,13 @@ public class PostCreate extends BaseDto<Long> {
     @ApiModelProperty(value = "文章标签")
     private String tags;
 
-    @ApiModelProperty(hidden = true)
     @Override
-    public boolean isValid() {
-        return !StringUtils.isAnyBlank(title, content);
+    public void checkValid() throws BusinessException {
+        if (StringUtils.isBlank(title)) {
+            throw BusinessException.from(ResultCode.PARAMS_ERROR, true, "文章标题不能为空");
+        }
+        if (StringUtils.isBlank(content)) {
+            throw BusinessException.from(ResultCode.PARAMS_ERROR, true, "文章内容不能为空");
+        }
     }
 }

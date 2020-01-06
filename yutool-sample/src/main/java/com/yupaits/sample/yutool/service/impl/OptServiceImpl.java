@@ -1,6 +1,8 @@
 package com.yupaits.sample.yutool.service.impl;
 
 import com.yupaits.yutool.commons.service.OptService;
+import com.yupaits.yutool.orm.support.service.MetaObjectOptService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,12 +12,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OptServiceImpl implements OptService {
-    private static final String OPERATOR_ID = "123456";
     private static final String OPERATOR_NAME = "测试员";
+
+    private final MetaObjectOptService metaObjectOptService;
+
+    @Autowired
+    public OptServiceImpl(MetaObjectOptService metaObjectOptService) {
+        this.metaObjectOptService = metaObjectOptService;
+    }
 
     @Override
     public String getOperatorId() {
-        return OPERATOR_ID;
+        return metaObjectOptService.getOperatorId();
     }
 
     @Override

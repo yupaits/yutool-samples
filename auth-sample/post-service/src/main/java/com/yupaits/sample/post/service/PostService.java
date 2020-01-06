@@ -6,9 +6,10 @@ import com.yupaits.sample.post.model.Post;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
 import com.yupaits.yutool.orm.base.BaseDto;
+import com.yupaits.yutool.orm.base.BaseQuery;
 import com.yupaits.yutool.orm.base.BaseVo;
 import com.yupaits.yutool.orm.base.IBaseService;
-import com.yupaits.yutool.orm.support.AggregateProps;
+import com.yupaits.yutool.orm.support.PageQuery;
 
 import java.util.List;
 
@@ -19,23 +20,14 @@ import java.util.List;
 public interface PostService extends IBaseService {
 
     /**
-     * 根据QueryWrapper获取Vo分页信息
-     * @param page 分页参数
-     * @param queryWrapper QueryWrapper对象
+     * 获取分页数据
+     * @param page 当前页码
+     * @param size 每页数量
+     * @param pageQuery 分页查询对象
      * @param <Vo> Vo类型
-     * @return Vo分页信息
+     * @return 分页数据
      */
-    <Vo extends BaseVo> Result<IPage<Vo>> resultPage(IPage<Post> page, Wrapper<Post> queryWrapper);
-
-    /**
-     * 根据QueryWrapper和AggregateProps获取携带聚合数据的Vo分页信息
-     * @param page 分页参数
-     * @param queryWrapper QueryWrapper对象
-     * @param aggregateProps AggregateProps对象
-     * @param <Vo> Vo类型
-     * @return 携带聚合数据的Vo分页信息
-     */
-    <Vo extends BaseVo> Result<IPage<Vo>> resultPage(IPage<Post> page, Wrapper<Post> queryWrapper, AggregateProps aggregateProps);
+    <Vo extends BaseVo, Q extends BaseQuery<Post>> Result<IPage<Vo>> resultPage(int page, int size, PageQuery<Q> pageQuery);
 
     /**
      * 根据QueryWrapper获取Vo对象列表
