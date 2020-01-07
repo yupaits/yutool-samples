@@ -24,13 +24,11 @@ public interface PersonService extends IBaseService {
 
     /**
      * 获取分页数据
-     * @param page 当前页码
-     * @param size 每页数量
      * @param pageQuery 分页查询对象
      * @param <Vo> Vo类型
      * @return 分页数据
      */
-    <Vo extends BaseVo, Q extends BaseQuery<Person>> Result<IPage<Vo>> resultPage(int page, int size, PageQuery<Q> pageQuery);
+    <Vo extends BaseVo, Q extends BaseQuery<Person>> Result<IPage<Vo>> resultPage(PageQuery<Q> pageQuery);
 
     /**
      * 根据QueryWrapper获取Vo对象列表

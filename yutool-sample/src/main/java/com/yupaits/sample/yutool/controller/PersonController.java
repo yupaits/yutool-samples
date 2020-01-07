@@ -3,8 +3,6 @@ package com.yupaits.sample.yutool.controller;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.google.common.collect.Lists;
 import com.yupaits.sample.yutool.dto.PersonCreate;
 import com.yupaits.sample.yutool.dto.PersonDto;
 import com.yupaits.sample.yutool.dto.PersonUpdate;
@@ -16,10 +14,11 @@ import com.yupaits.sample.yutool.vo.PersonVo;
 import com.yupaits.yutool.cache.annotation.EvictCache;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
-import com.yupaits.yutool.orm.support.*;
+import com.yupaits.yutool.orm.annotation.PageQueryDefault;
+import com.yupaits.yutool.orm.support.PageQuery;
+import com.yupaits.yutool.orm.support.VoBuilder;
+import com.yupaits.yutool.orm.support.VoProps;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,19 +43,11 @@ public class PersonController {
     }
 
     @ApiOperation("获取人类分页数据")
-    @ApiImplicitParams({@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10", dataType = "int", paramType = "query")})
     @PostMapping("/page")
-    public Result<IPage<PersonVo>> getPersonPage(@RequestParam(required = false, defaultValue = "1") int page,
-                                                 @RequestParam(required = false, defaultValue = "10") int size,
-                                                 OrderItem[] orders,
-                                                 AggregateField[] aggregateFields,
+    public Result<IPage<PersonVo>> getPersonPage(@PageQueryDefault PageQuery<PersonQuery> pageQuery,
                                                  PersonQuery personQuery) {
-        PageQuery<PersonQuery> pageQuery = new PageQuery<>();
-        pageQuery.setOrders(Lists.newArrayList(orders));
-        pageQuery.setAggregates(Lists.newArrayList(aggregateFields));
         pageQuery.setQuery(personQuery);
-        return personService.resultPage(page, size, pageQuery);
+        return personService.resultPage(pageQuery);
     }
 
     @ApiOperation("获取人类列表")
