@@ -8,10 +8,9 @@ import com.yupaits.sample.post.service.PostService;
 import com.yupaits.sample.post.vo.PostVo;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
+import com.yupaits.yutool.orm.annotation.PageQueryDefault;
 import com.yupaits.yutool.orm.support.PageQuery;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,13 +51,9 @@ public class PostController {
     }
 
     @ApiOperation("获取文章分页数据")
-    @ApiImplicitParams({@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10", dataType = "int", paramType = "query")})
-    @PostMapping("/page")
-    public Result<IPage<PostVo>> getPostPage(@RequestParam(required = false, defaultValue = "1") int page,
-                                             @RequestParam(required = false, defaultValue = "10") int size,
-                                             @RequestBody(required = false) PageQuery<PostQuery> pageQuery) {
-        return postService.resultPage(page, size, pageQuery);
+    @GetMapping("/page")
+    public Result<IPage<PostVo>> getPostPage(@PageQueryDefault PageQuery<PostQuery> pageQuery) {
+        return postService.resultPage(pageQuery);
     }
 
     @ApiOperation("获取文章列表")

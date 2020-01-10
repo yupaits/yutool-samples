@@ -14,10 +14,10 @@ import com.yupaits.sample.yutool.vo.PersonVo;
 import com.yupaits.yutool.cache.annotation.EvictCache;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
+import com.yupaits.yutool.orm.annotation.AggregateDefault;
 import com.yupaits.yutool.orm.annotation.PageQueryDefault;
-import com.yupaits.yutool.orm.support.PageQuery;
-import com.yupaits.yutool.orm.support.VoBuilder;
-import com.yupaits.yutool.orm.support.VoProps;
+import com.yupaits.yutool.orm.annotation.SortDefault;
+import com.yupaits.yutool.orm.support.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,15 +43,28 @@ public class PersonController {
     }
 
     @ApiOperation("获取人类分页数据")
-    @PostMapping("/page")
-    public Result<IPage<PersonVo>> getPersonPage(@PageQueryDefault PageQuery<PersonQuery> pageQuery,
-                                                 PersonQuery personQuery) {
+    @GetMapping("/page")
+    public Result<IPage<PersonVo>> getPersonPage(
+//            @PageQueryDefault PageQuery<PersonQuery> pageQuery,
+//            @SortDefault(column = "age", asc = "false") Sorts sorts,
+            @SortDefault.SortDefaults({@SortDefault(column = "age", asc = "false"), @SortDefault(column = "name")}) Sorts sorts,
+//            Sorts sorts,
+//            @AggregateDefault(column = "age", type = "sum") Aggregates aggregates,
+            @AggregateDefault.AggregateDefaults({
+                    @AggregateDefault(column = "age", type = "max"),
+                    @AggregateDefault(column = "age", type = "min"),
+                    @AggregateDefault(column = "name", type = "count")}) Aggregates aggregates,
+//            Aggregates aggregates,
+            PersonQuery personQuery) {
+        PageQuery<PersonQuery> pageQuery = PageQuery.of(1L, 10L);
+        pageQuery.setSorts(sorts);
+        pageQuery.setAggregates(aggregates);
         pageQuery.setQuery(personQuery);
         return personService.resultPage(pageQuery);
     }
 
     @ApiOperation("获取人类列表")
-    @PostMapping("/list")
+    @GetMapping("/list")
     public Result<List<PersonVo>> getPersonList(PersonQuery personQuery) {
         Wrapper<Person> wrapper = personQuery.buildNewQuery();
         return personService.resultList(wrapper);
@@ -105,7 +118,6 @@ public class PersonController {
 //        return personService.resultSaveBatchDto(persons);
         //批量保存Dto并返回对应的Vo列表
         return personService.resultSaveBatchDtoAndReturn(persons);
-
     }
 
     @EvictCache
