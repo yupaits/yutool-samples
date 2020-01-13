@@ -34,6 +34,7 @@
         <module>zk-sample</module>
         <module>auth-sample</module>
         <module>spring-cloud-alibaba-sample</module>
+        <module>ldap-sample</module>
     </modules>
 
 </project>

@@ -1,0 +1,9 @@
+server:
+  port: 8140
+
+spring:
+  ldap:
+    urls: ldap://localhost:389
+    username: cn=manager
+    password: ldap123
+    base: dc=example,dc=com

@@ -23,3 +23,4 @@
 |**seata-sample** account-service|Seate分布式事务 账户服务|8131|
 |**seata-sample** order-service|Seate分布式事务 订单服务|8132|
 |**seata-sample** storage-service|Seate分布式事务 库存服务|8133|
+|ldap-sample|Ldap示例|8140|
