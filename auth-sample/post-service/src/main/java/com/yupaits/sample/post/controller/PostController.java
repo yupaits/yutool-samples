@@ -52,13 +52,15 @@ public class PostController {
 
     @ApiOperation("获取文章分页数据")
     @GetMapping("/page")
-    public Result<IPage<PostVo>> getPostPage(@PageQueryDefault PageQuery<PostQuery> pageQuery) {
+    public Result<IPage<PostVo>> getPostPage(@PageQueryDefault PageQuery<PostQuery> pageQuery,
+                                             PostQuery query) throws BusinessException {
+        pageQuery.setQuery(query);
         return postService.resultPage(pageQuery);
     }
 
     @ApiOperation("获取文章列表")
     @PostMapping("/list")
-    public Result<List<PostVo>> getPostList(PostQuery postQuery) {
-        return postService.resultList(postQuery.buildNewQuery());
+    public Result<List<PostVo>> getPostList(PostQuery postQuery) throws BusinessException {
+        return postService.resultList(postQuery.buildNewLambdaQuery());
     }
 }

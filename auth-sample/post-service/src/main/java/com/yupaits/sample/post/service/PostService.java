@@ -8,7 +8,6 @@ import com.yupaits.yutool.commons.result.Result;
 import com.yupaits.yutool.orm.base.BaseDto;
 import com.yupaits.yutool.orm.base.BaseQuery;
 import com.yupaits.yutool.orm.base.BaseVo;
-import com.yupaits.yutool.orm.base.IBaseService;
 import com.yupaits.yutool.orm.support.PageQuery;
 
 import java.util.List;
@@ -17,15 +16,16 @@ import java.util.List;
  * @author yupaits
  * @date 2019/8/22
  */
-public interface PostService extends IBaseService {
+public interface PostService {
 
     /**
      * 获取分页数据
      * @param pageQuery 分页查询对象
      * @param <Vo> Vo类型
      * @return 分页数据
+     * @throws BusinessException 抛出BusinessException
      */
-    <Vo extends BaseVo, Q extends BaseQuery<Post>> Result<IPage<Vo>> resultPage(PageQuery<Q> pageQuery);
+    <Vo extends BaseVo, Q extends BaseQuery<Post>> Result<IPage<Vo>> resultPage(PageQuery<Q> pageQuery) throws BusinessException;
 
     /**
      * 根据QueryWrapper获取Vo对象列表

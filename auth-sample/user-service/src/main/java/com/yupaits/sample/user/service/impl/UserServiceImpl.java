@@ -43,12 +43,7 @@ public class UserServiceImpl extends BaseResultServiceImpl<Long, User, UserMappe
     @Override
     public void setDefaultVoConfig() {
         setDefaultVoClass(UserVo.class);
-        setDefaultVoBuilder(new VoBuilder<UserVo, User>() {
-            @Override
-            public void buildVo(UserVo vo, User model) {
-                vo.setRoles(getUserRoles(model.getId()));
-            }
-        });
+        setDefaultVoBuilder((VoBuilder<UserVo, User>) (vo, model) -> vo.setRoles(getUserRoles(model.getId())));
     }
 
     @Override

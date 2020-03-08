@@ -1,6 +1,5 @@
 package com.yupaits.sample.yutool.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yupaits.sample.yutool.dto.PersonCreate;
@@ -15,7 +14,6 @@ import com.yupaits.yutool.cache.annotation.EvictCache;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
 import com.yupaits.yutool.orm.annotation.AggregateDefault;
-import com.yupaits.yutool.orm.annotation.PageQueryDefault;
 import com.yupaits.yutool.orm.annotation.SortDefault;
 import com.yupaits.yutool.orm.support.*;
 import io.swagger.annotations.Api;
@@ -55,7 +53,7 @@ public class PersonController {
                     @AggregateDefault(column = "age", type = "min"),
                     @AggregateDefault(column = "name", type = "count")}) Aggregates aggregates,
 //            Aggregates aggregates,
-            PersonQuery personQuery) {
+            PersonQuery personQuery) throws BusinessException {
         PageQuery<PersonQuery> pageQuery = PageQuery.of(1L, 10L);
         pageQuery.setSorts(sorts);
         pageQuery.setAggregates(aggregates);
@@ -65,9 +63,8 @@ public class PersonController {
 
     @ApiOperation("获取人类列表")
     @GetMapping("/list")
-    public Result<List<PersonVo>> getPersonList(PersonQuery personQuery) {
-        Wrapper<Person> wrapper = personQuery.buildNewQuery();
-        return personService.resultList(wrapper);
+    public Result<List<PersonVo>> getPersonList(PersonQuery personQuery) throws BusinessException {
+        return personService.resultList(personQuery.buildNewLambdaQuery());
     }
 
     @ApiOperation("根据ID获取人类")
@@ -85,13 +82,8 @@ public class PersonController {
     public Result addPerson(@RequestBody PersonCreate personCreate) throws BusinessException {
         //动态设置Vo类
         personService.setVoClass(HumanVo.class);
-        personService.setVoBuilder(new VoBuilder<HumanVo, Person>() {
-            @Override
-            public void buildVo(HumanVo vo, Person model) {
-                vo.setDescription("name: " + model.getName() + ", age: " + model.getAge() + ", gender: " +
-                        (model.getGender() != null && model.getGender() == 0 ? "男" : "女"));
-            }
-        });
+        personService.setVoBuilder((VoBuilder<HumanVo, Person>) (vo, model) -> vo.setDescription("name: " + model.getName() + ", age: " + model.getAge() + ", gender: " +
+                (model.getGender() != null && model.getGender() == 0 ? "男" : "女")));
         //保存Dto
 //        return personService.resultSaveDto(personCreate);
         //保存Dto并返回对应的Vo信息

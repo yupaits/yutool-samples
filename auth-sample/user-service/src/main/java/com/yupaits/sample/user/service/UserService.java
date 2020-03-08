@@ -6,7 +6,6 @@ import com.yupaits.sample.user.model.UserRole;
 import com.yupaits.sample.user.vo.UserVo;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
-import com.yupaits.yutool.orm.base.IBaseService;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @author yupaits
  * @date 2019/8/22
  */
-public interface UserService extends IBaseService {
+public interface UserService {
     /**
      * 根据用户名获取User
      * @param username 用户名

@@ -28,10 +28,7 @@ public class PersonServiceImpl extends BaseResultServiceImpl<Long, Person, Perso
     @Override
     public void setDefaultVoConfig() {
         setDefaultVoClass(PersonVo.class);
-        setDefaultVoBuilder(new VoBuilder<PersonVo, Person>() {
-            @Override
-            public void buildVo(PersonVo vo, Person model) {
-            }
+        setDefaultVoBuilder((VoBuilder<PersonVo, Person>) (vo, model) -> {
         });
     }
 
