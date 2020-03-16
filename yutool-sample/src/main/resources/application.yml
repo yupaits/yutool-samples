@@ -75,6 +75,10 @@ api:
       contactUrl: https://github.com/yupaits
       contactEmail: ts495606653@hotmail.com
 
+# 文件服务配置
+file-server:
+  type: fastdfs
+
 # FastDFS配置
 fdfs:
   so-timeout: 1501
