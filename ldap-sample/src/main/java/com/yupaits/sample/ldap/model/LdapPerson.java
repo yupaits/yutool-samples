@@ -1,10 +1,10 @@
 package com.yupaits.sample.ldap.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.ldap.odm.annotations.Attribute;
 import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
 
@@ -21,7 +21,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entry(objectClasses = {"top", "inetOrgPerson"}, base = "ou=People")
-public class LdapPerson implements Serializable {
+public final class LdapPerson implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -33,11 +33,9 @@ public class LdapPerson implements Serializable {
 
     private String uidNumber;
 
-    @Attribute(name = "sn")
-    private String lastName;
+    private String sn;
 
-    @Attribute(name = "cn")
-    private String commonName;
+    private String cn;
 
     private String mail;
 

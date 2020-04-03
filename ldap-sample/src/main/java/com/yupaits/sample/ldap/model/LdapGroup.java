@@ -25,7 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entry(objectClasses = {"top", "groupOfUniqueNames"}, base = "ou=Group")
-public class LdapGroup implements Serializable {
+public final class LdapGroup implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -37,17 +37,4 @@ public class LdapGroup implements Serializable {
 
     @Attribute(name = "uniqueMember")
     private Set<Name> members;
-
-    public void addMember(Name member) {
-        if (members == null) {
-            members = new HashSet<>();
-        }
-        members.add(member);
-    }
-
-    public void removeMember(Name member) {
-        if (!CollectionUtils.isEmpty(members)) {
-            members.remove(member);
-        }
-    }
 }
