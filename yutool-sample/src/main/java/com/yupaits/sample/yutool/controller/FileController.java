@@ -5,6 +5,7 @@ import com.yupaits.yutool.commons.result.ResultWrapper;
 import com.yupaits.yutool.file.core.DeleteTemplate;
 import com.yupaits.yutool.file.core.DownloadTemplate;
 import com.yupaits.yutool.file.core.UploadTemplate;
+import com.yupaits.yutool.file.exception.DeleteException;
 import com.yupaits.yutool.file.exception.DownloadException;
 import com.yupaits.yutool.file.exception.UploadException;
 import com.yupaits.yutool.file.support.DownloadProps;
@@ -111,7 +112,7 @@ public class FileController {
 
     @ApiOperation("删除文件")
     @DeleteMapping("/**")
-    public Result delete(HttpServletRequest request) {
+    public Result delete(HttpServletRequest request) throws DeleteException {
         String fullPath = StringUtils.substringAfter(StringUtils.substringAfter(request.getRequestURI(), UPLOAD_PATH_PREFIX), PATH_SEPARATOR);
         deleteTemplate.deleteFile(fullPath);
         return ResultWrapper.success();
