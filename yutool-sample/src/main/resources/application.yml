@@ -78,6 +78,10 @@ api:
 # 文件服务配置
 file-server:
   type: fastdfs
+  minio:
+    endpoint:
+    accessKey:
+    secretKey:
 
 # FastDFS配置
 fdfs:
