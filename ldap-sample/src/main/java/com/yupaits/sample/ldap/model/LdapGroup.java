@@ -8,11 +8,9 @@ import org.springframework.ldap.odm.annotations.Attribute;
 import org.springframework.ldap.odm.annotations.DnAttribute;
 import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
-import org.springframework.util.CollectionUtils;
 
 import javax.naming.Name;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
