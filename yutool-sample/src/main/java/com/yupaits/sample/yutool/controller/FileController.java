@@ -34,7 +34,7 @@ import java.util.Map;
 @RequestMapping("/upload/{storeGroup}")
 @Api(tags = "文件接口")
 public class FileController {
-    private static final String UPLOAD_PATH_PREFIX = "/upload/";
+    private static final String UPLOAD_PATH_PREFIX = "/upload";
     private static final String PATH_SEPARATOR = "/";
 
     private final UploadTemplate uploadTemplate;
