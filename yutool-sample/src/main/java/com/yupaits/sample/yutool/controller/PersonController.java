@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yupaits.sample.yutool.dto.PersonCreate;
 import com.yupaits.sample.yutool.dto.PersonDto;
 import com.yupaits.sample.yutool.dto.PersonUpdate;
-import com.yupaits.sample.yutool.model.Person;
+import com.yupaits.sample.yutool.entity.Person;
 import com.yupaits.sample.yutool.query.PersonQuery;
 import com.yupaits.sample.yutool.service.PersonService;
 import com.yupaits.sample.yutool.vo.HumanVo;

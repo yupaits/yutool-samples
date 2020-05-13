@@ -111,3 +111,8 @@ fdfs:
 #    eprId:
 #    userId:
 #    userPassword:
+
+# 自定义对象扫描包路径
+meta:
+  scanner:
+    paths: com.yupaits.sample.yutool.entity

@@ -1,7 +1,7 @@
 package com.yupaits.sample.yutool.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.yupaits.sample.yutool.model.Person;
+import com.yupaits.sample.yutool.entity.Person;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.orm.base.BaseQuery;
 import io.swagger.annotations.ApiModel;

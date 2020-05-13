@@ -1,7 +1,7 @@
 package com.yupaits.sample.yutool.mq.receiver;
 
 import com.yupaits.yutool.cache.core.CacheTemplate;
-import com.yupaits.yutool.mq.core.Receiver;
+import com.yupaits.yutool.mq.core.BaseReceiver;
 import com.yupaits.yutool.mq.core.RetryableSender;
 import com.yupaits.yutool.mq.exception.MqRetryException;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RabbitListener(queues = {"sample"})
-public class SampleMessageReceiver extends Receiver<String> {
+public class SampleMessageReceiver extends BaseReceiver<String> {
 
     @Autowired
     protected SampleMessageReceiver(RetryableSender sender, CacheTemplate cacheTemplate) {

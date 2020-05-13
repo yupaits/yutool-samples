@@ -24,6 +24,11 @@
     <dependencies>
         <dependency>
             <groupId>com.yupaits</groupId>
+            <artifactId>yutool-metadata</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yupaits</groupId>
             <artifactId>yutool-orm</artifactId>
         </dependency>
 

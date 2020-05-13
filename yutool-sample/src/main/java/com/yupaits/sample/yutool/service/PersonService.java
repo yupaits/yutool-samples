@@ -2,7 +2,7 @@ package com.yupaits.sample.yutool.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.yupaits.sample.yutool.model.Person;
+import com.yupaits.sample.yutool.entity.Person;
 import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.result.Result;
 import com.yupaits.yutool.orm.base.BaseDto;

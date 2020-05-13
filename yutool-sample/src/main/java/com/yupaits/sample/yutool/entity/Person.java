@@ -1,4 +1,4 @@
-package com.yupaits.sample.yutool.model;
+package com.yupaits.sample.yutool.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.yupaits.yutool.orm.annotation.AuditLog;
