@@ -1,7 +1,7 @@
 package com.yupaits.sample.yutool.mapper;
 
-import com.yupaits.sample.yutool.entity.Animal;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yupaits.sample.yutool.entity.Animal;
 
 /**
  * 动物Mapper

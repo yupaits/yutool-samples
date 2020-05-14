@@ -17,26 +17,26 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@MetaObj(label = "动物")
+@MetaObj("动物")
 public class Animal extends BaseModel<Long, Animal> {
     private static final long serialVersionUID = 1L;
 
     /**
      * 昵称
      */
-    @MetaField(label = "昵称")
+    @MetaField("昵称")
     private String nickname;
 
     /**
      * 年龄
      */
-    @MetaField(label = "年龄")
+    @MetaField("年龄")
     private Integer age;
 
     /**
      * 性别
      */
-    @MetaField(label = "性别")
+    @MetaField("性别")
     private Byte gender;
 
     /**
