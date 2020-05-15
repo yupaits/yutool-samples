@@ -1,9 +1,14 @@
 package com.yupaits.sample.yutool.controller;
 
 import com.google.common.collect.Lists;
+import com.yupaits.sample.yutool.mq.SampleQueue;
 import com.yupaits.sample.yutool.push.MsgTemplate;
 import com.yupaits.yutool.commons.result.Result;
 import com.yupaits.yutool.commons.result.ResultWrapper;
+import com.yupaits.yutool.mq.core.RetryableSender;
+import com.yupaits.yutool.mq.exception.MqRetryException;
+import com.yupaits.yutool.mq.support.RetryProps;
+import com.yupaits.yutool.mq.support.RetryStrategy;
 import com.yupaits.yutool.push.core.PushTemplate;
 import com.yupaits.yutool.push.exception.PushException;
 import com.yupaits.yutool.push.model.msg.*;
@@ -33,11 +38,13 @@ public class PushController {
 
     private final PushTemplate pushTemplate;
     private final YunxinProvider yunxinProvider;
+    private final RetryableSender retryableSender;
 
     @Autowired
-    public PushController(PushTemplate pushTemplate, YunxinProvider yunxinProvider) {
+    public PushController(PushTemplate pushTemplate, YunxinProvider yunxinProvider, RetryableSender retryableSender) {
         this.pushTemplate = pushTemplate;
         this.yunxinProvider = yunxinProvider;
+        this.retryableSender = retryableSender;
     }
 
     @ApiOperation("邮件推送测试")
@@ -151,6 +158,21 @@ public class PushController {
     @PostMapping("/im/accid")
     public Result createAccId(@RequestBody AccIdCreate accIdCreate) throws PushException {
         yunxinProvider.createAccId(accIdCreate);
+        return ResultWrapper.success();
+    }
+
+    @ApiOperation("重试消息测试接口")
+    @GetMapping("/mq/retry/test")
+    public Result testMqRetry() throws MqRetryException {
+        RetryProps retryProps = RetryProps.builder()
+                .retryable(true)
+                .queueEnum(SampleQueue.SAMPLE_QUEUE)
+                .strategy(RetryStrategy.PROGRESSIVE)
+                .firstDelayMillis(2000L)
+                .times(3)
+                .delays(Lists.newArrayList(2000L, 4000L, 6000L))
+                .build();
+        retryableSender.sendRetryableMessage("重试消息测试内容", SampleQueue.SAMPLE_QUEUE, retryProps);
         return ResultWrapper.success();
     }
 }

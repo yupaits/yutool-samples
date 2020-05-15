@@ -55,7 +55,7 @@ var app = new Vue({
   }
 });
 
-var url = "http://localhost:2009/sockjs/webmsg";
+var url = "http://localhost:8000/sockjs/webmsg";
 var sock = new SockJS(url);
 sock.onopen = function() {
   console.log('Socket Opened!');
