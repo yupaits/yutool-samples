@@ -22,15 +22,19 @@ import com.yupaits.yutool.push.support.notification.NotificationType;
 import com.yupaits.yutool.push.support.webmsg.GlobalAction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author yupaits
  * @date 2019/8/9
  */
+@Slf4j
 @RestController
 @RequestMapping("/push")
 @Api(tags = "推送测试接口")
@@ -64,7 +68,7 @@ public class PushController {
         pushTemplate.push(emailMsg, PushProps.builder()
                 .receivers(receivers)
                 .delayed(true)
-                .delayMillis(10000L)
+                .delayMillis(3000L)
                 .build());
         return ResultWrapper.success();
     }
@@ -86,7 +90,7 @@ public class PushController {
         pushTemplate.push(webMsg, PushProps.builder()
                 .receivers(receivers)
                 .delayed(true)
-                .delayMillis(10000L)
+                .delayMillis(3000L)
                 .build());
         return ResultWrapper.success();
     }
@@ -107,7 +111,7 @@ public class PushController {
         pushTemplate.push(notification, PushProps.builder()
                 .receivers(receivers)
                 .delayed(true)
-                .delayMillis(10000L)
+                .delayMillis(3000L)
                 .build());
         return ResultWrapper.success();
     }
@@ -127,7 +131,7 @@ public class PushController {
         pushTemplate.push(smsMsg, PushProps.builder()
                 .receivers(receivers)
                 .delayed(true)
-                .delayMillis(10000L)
+                .delayMillis(3000L)
                 .build());
         return ResultWrapper.success();
     }
@@ -149,7 +153,7 @@ public class PushController {
         pushTemplate.push(imMsg, PushProps.builder()
                 .receivers(receivers)
                 .delayed(true)
-                .delayMillis(10000L)
+                .delayMillis(3000L)
                 .build());
         return ResultWrapper.success();
     }
@@ -166,13 +170,12 @@ public class PushController {
     public Result testMqRetry() throws MqRetryException {
         RetryProps retryProps = RetryProps.builder()
                 .retryable(true)
-                .queueEnum(SampleQueue.SAMPLE_QUEUE)
-                .strategy(RetryStrategy.PROGRESSIVE)
-                .firstDelayMillis(2000L)
-                .times(3)
-                .delays(Lists.newArrayList(2000L, 4000L, 6000L))
+                .queueEnum(SampleQueue.SAMPLE_TTL_QUEUE)
+                .strategy(RetryStrategy.PERIODIC).firstDelayMillis(5000L).intervalMillis(2000L).times(new AtomicInteger(4))
+//                .strategy(RetryStrategy.PROGRESSIVE).delays(Lists.newArrayList(2000L, 4000L, 6000L))
                 .build();
-        retryableSender.sendRetryableMessage("重试消息测试内容", SampleQueue.SAMPLE_QUEUE, retryProps);
+        retryableSender.sendRetryableMessage("重试消息测试内容", retryProps);
+        log.info("开始发送重试消息");
         return ResultWrapper.success();
     }
 }

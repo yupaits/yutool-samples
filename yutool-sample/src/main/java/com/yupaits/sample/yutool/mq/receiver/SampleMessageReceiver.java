@@ -27,6 +27,9 @@ public class SampleMessageReceiver extends BaseReceiver<String> {
     @Autowired
     protected SampleMessageReceiver(RetryableSender sender, CacheTemplate cacheTemplate) {
         super(sender, cacheTemplate);
+        setCancelCallback(message -> {
+            log.info("取消重试消息回调，消息内容：{}", message);
+        });
     }
 
     @Override
@@ -37,14 +40,14 @@ public class SampleMessageReceiver extends BaseReceiver<String> {
     @Override
     @RabbitHandler
     public void handle(@Payload String message, @Headers Map<String, Object> headers) {
-        log.info("接收消息：{}", message);
-        log.info("headers：{}", headers);
-        if (isRetryable(headers)) {
-            try {
+        log.info("接收消息：{}，headers：{}", message, headers);
+        try {
+            cancelRetry(message, headers);
+            if (isRetryable(headers)) {
                 retry(message, headers);
-            } catch (MqRetryException e) {
-                log.error(e.getMessage(), e);
             }
+        } catch (MqRetryException e) {
+            log.error(e.getMessage(), e);
         }
     }
 }
