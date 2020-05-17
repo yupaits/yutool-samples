@@ -10,10 +10,9 @@ import com.yupaits.yutool.file.exception.DownloadException;
 import com.yupaits.yutool.file.exception.UploadException;
 import com.yupaits.yutool.file.support.DownloadProps;
 import com.yupaits.yutool.file.support.UploadProps;
-import com.yupaits.yutool.file.support.WatermarkType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import net.coobird.thumbnailator.geometry.Positions;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +50,7 @@ public class FileController {
     @ApiOperation("上传文件并返回访问路径")
     @PostMapping("")
     public Result<String> upload(@RequestParam("file") MultipartFile file,
-                                 @PathVariable String storeGroup) throws UploadException {
+                                 @ApiParam(value = "文件存储分组", required = true) @PathVariable String storeGroup) throws UploadException {
         UploadProps uploadProps = new UploadProps();
         uploadProps.setStoreGroup(storeGroup);
         return uploadTemplate.resultUpload(file, uploadProps);
@@ -60,7 +59,7 @@ public class FileController {
     @ApiOperation("批量上传文件并返回访问路径")
     @PostMapping("/batch")
     public Result<Map<String, String>> uploadBatch(@RequestParam("files")List<MultipartFile> files,
-                                                   @PathVariable String storeGroup) throws UploadException {
+                                                   @ApiParam(value = "文件存储分组", required = true) @PathVariable String storeGroup) throws UploadException {
         UploadProps uploadProps = new UploadProps();
         uploadProps.setStoreGroup(storeGroup);
         return uploadTemplate.resultUploadBatch(files, uploadProps);
@@ -69,43 +68,25 @@ public class FileController {
     @ApiOperation("上传图片并返回访问路径")
     @PostMapping("/image")
     public Result<String> uploadImage(@RequestParam("image") MultipartFile image,
-                                      @PathVariable String storeGroup,
-                                      @RequestParam(required = false, defaultValue = "false") boolean thumb,
-                                      @RequestParam(required = false, defaultValue = "0") int width,
-                                      @RequestParam(required = false, defaultValue = "0") int height,
-                                      @RequestParam(required = false, defaultValue = "100") double percent) throws UploadException {
-        UploadProps uploadProps = new UploadProps(storeGroup, thumb, width, height, percent);
+                                      @ApiParam(value = "文件存储分组", required = true) @PathVariable String storeGroup,
+                                      UploadProps uploadProps) throws UploadException {
+        uploadProps.setStoreGroup(storeGroup);
         return uploadTemplate.resultUploadImage(image, uploadProps);
     }
 
     @ApiOperation("批量上传图片并返回访问路径")
     @PostMapping("/image/batch")
     public Result<Map<String, String>> uploadBatchImage(@RequestParam("images")List<MultipartFile> images,
-                                                 @PathVariable String storeGroup,
-                                                 @RequestParam(required = false, defaultValue = "false") boolean thumb,
-                                                 @RequestParam(required = false, defaultValue = "0") int width,
-                                                 @RequestParam(required = false, defaultValue = "0") int height,
-                                                 @RequestParam(required = false, defaultValue = "100") double percent) throws UploadException {
-        UploadProps uploadProps = new UploadProps(storeGroup, thumb, width, height, percent);
+                                                        @ApiParam(value = "文件存储分组", required = true) @PathVariable String storeGroup,
+                                                        UploadProps uploadProps) throws UploadException {
+        uploadProps.setStoreGroup(storeGroup);
         return uploadTemplate.resultUploadBatchImage(images, uploadProps);
     }
 
     @ApiOperation("下载文件")
     @GetMapping("/**")
     public void download(HttpServletRequest request, HttpServletResponse response,
-                         @RequestParam(required = false, defaultValue = "false") boolean thumb,
-                         @RequestParam(required = false, defaultValue = "0") int width,
-                         @RequestParam(required = false, defaultValue = "0") int height,
-                         @RequestParam(required = false, defaultValue = "1.0") float quality,
-                         @RequestParam(required = false, defaultValue = "1.0") double scale,
-                         @RequestParam(required = false, defaultValue = "false") boolean withWatermark,
-                         @RequestParam(required = false) WatermarkType watermarkType,
-                         @RequestParam(required = false) String watermarkPic,
-                         @RequestParam(required = false) String watermarkText,
-                         @RequestParam(required = false, defaultValue = "1.0") float watermarkOpacity,
-                         @RequestParam(required = false) Positions watermarkPos) throws IOException, DownloadException {
-        DownloadProps downloadProps = new DownloadProps(thumb, width, height, quality, scale, withWatermark,
-                watermarkType, watermarkPic, watermarkText, watermarkOpacity, watermarkPos);
+                         DownloadProps downloadProps) throws IOException, DownloadException {
         String fullPath = StringUtils.substringAfter(StringUtils.substringAfter(request.getRequestURI(), UPLOAD_PATH_PREFIX), PATH_SEPARATOR);
         downloadTemplate.downloadFile(response, fullPath, downloadProps);
     }

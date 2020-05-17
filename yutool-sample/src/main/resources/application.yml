@@ -50,12 +50,20 @@ mybatis-plus:
   typeEnumsPackage: com.yupaits.yutool.**
 
 cache:
+  aop-enabled: false
   enabled: true
   key-prefix: sample
   bloom-filter-enabled: false
 
 # Swagger接口文档配置
 api:
+  log:
+    enabled: true
+    request-id-enabled: true
+    opt-mask: true
+    encrypt-args: true
+    log-result: true
+    encrypt-result: true
   version: v1.0.0
   contactName: yupaits
   contactUrl: https://github.com/yupaits
