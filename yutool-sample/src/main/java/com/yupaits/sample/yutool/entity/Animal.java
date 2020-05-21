@@ -3,7 +3,7 @@ package com.yupaits.sample.yutool.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.yupaits.yutool.metadata.annotation.MetaField;
 import com.yupaits.yutool.metadata.annotation.MetaObj;
-import com.yupaits.yutool.orm.base.BaseModel;
+import com.yupaits.yutool.metadata.base.BaseMetaModel;
 import lombok.*;
 
 /**
@@ -17,8 +17,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@MetaObj("动物")
-public class Animal extends BaseModel<Long, Animal> {
+@MetaObj(value = "动物", serviceBean = "animalService")
+public class Animal extends BaseMetaModel<Long, Animal> {
     private static final long serialVersionUID = 1L;
 
     /**

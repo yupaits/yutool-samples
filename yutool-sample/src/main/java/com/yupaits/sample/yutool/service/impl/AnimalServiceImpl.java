@@ -31,7 +31,7 @@ import java.util.List;
  * @author yupaits
  * @date 2020-05-13
  */
-@Service
+@Service("animalService")
 public class AnimalServiceImpl extends BaseMetaResultServiceImpl<Long, Animal, AnimalMapper> implements AnimalService {
 
 	@Autowired
