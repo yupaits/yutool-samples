@@ -1,5 +1,6 @@
 package com.yupaits.sample.yutool.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yupaits.sample.yutool.dto.AnimalDto;
 import com.yupaits.sample.yutool.entity.Animal;
@@ -32,6 +33,7 @@ import java.util.List;
  * @date 2020-05-13
  */
 @Service("animalService")
+@DS("#header.tenantName")
 public class AnimalServiceImpl extends BaseMetaResultServiceImpl<Long, Animal, AnimalMapper> implements AnimalService {
 
 	@Autowired
