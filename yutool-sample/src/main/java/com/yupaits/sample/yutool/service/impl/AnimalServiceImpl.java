@@ -75,7 +75,7 @@ public class AnimalServiceImpl extends BaseMetaResultServiceImpl<Long, Animal, A
 
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
-	public Result deleteById(Long id) {
+	public Result deleteById(Long id) throws BusinessException {
 		return resultDeleteMetaById(id);
 	}
 }

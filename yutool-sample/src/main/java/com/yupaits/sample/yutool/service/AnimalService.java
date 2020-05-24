@@ -44,5 +44,5 @@ public interface AnimalService {
   	/**
      * 根据ID删除
 	 */
-  	Result deleteById(Long id);
+  	Result deleteById(Long id) throws BusinessException;
 }

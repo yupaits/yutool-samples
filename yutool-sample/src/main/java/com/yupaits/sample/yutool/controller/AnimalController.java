@@ -63,7 +63,7 @@ public class AnimalController {
 
 	@ApiOperation("删除动物")
 	@DeleteMapping("/{id}")
-	public Result delete(@ApiParam(value = "动物ID", required = true) @PathVariable Long id) {
+	public Result delete(@ApiParam(value = "动物ID", required = true) @PathVariable Long id) throws BusinessException {
 		return animalService.deleteById(id);
 	}
 }
