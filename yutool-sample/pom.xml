@@ -59,6 +59,11 @@
 
         <dependency>
             <groupId>com.yupaits</groupId>
+            <artifactId>auth-filter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yupaits</groupId>
             <artifactId>sms-verify</artifactId>
         </dependency>
 

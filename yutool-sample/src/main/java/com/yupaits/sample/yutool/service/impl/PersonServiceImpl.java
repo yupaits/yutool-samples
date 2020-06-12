@@ -1,10 +1,10 @@
 package com.yupaits.sample.yutool.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.yupaits.sample.yutool.entity.Person;
 import com.yupaits.sample.yutool.mapper.PersonMapper;
 import com.yupaits.sample.yutool.service.PersonService;
 import com.yupaits.sample.yutool.vo.PersonVo;
+import com.yupaits.yutool.commons.annotation.AuthFilter;
 import com.yupaits.yutool.commons.service.OptService;
 import com.yupaits.yutool.orm.base.BaseResultServiceImpl;
 import com.yupaits.yutool.orm.support.AuditLogger;
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
  * @author yupaits
  * @date 2019-07-30
  */
+@AuthFilter(name = "person")
 @Service
-@DS("#header.tenantName")
 public class PersonServiceImpl extends BaseResultServiceImpl<Long, Person, PersonMapper> implements PersonService {
     @Autowired
     public PersonServiceImpl(OptService optService, AuditLogger auditLogger) {

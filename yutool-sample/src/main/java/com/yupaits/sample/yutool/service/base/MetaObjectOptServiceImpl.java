@@ -1,4 +1,4 @@
-package com.yupaits.sample.yutool.service.impl;
+package com.yupaits.sample.yutool.service.base;
 
 import com.yupaits.yutool.orm.support.service.MetaObjectOptService;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.yupaits.sample.yutool.service.impl;
+package com.yupaits.sample.yutool.service.file;
 
 import com.yupaits.yutool.file.support.service.AntiTheftService;
 import org.springframework.stereotype.Service;

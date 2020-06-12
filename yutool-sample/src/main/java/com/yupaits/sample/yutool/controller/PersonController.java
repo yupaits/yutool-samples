@@ -1,5 +1,6 @@
 package com.yupaits.sample.yutool.controller;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yupaits.sample.yutool.dto.PersonCreate;
@@ -28,6 +29,7 @@ import java.util.List;
  * @author yupaits
  * @date 2019-07-30
  */
+@DS("#header.tenantName")
 //@EnableCache
 @RestController
 @RequestMapping("/person")

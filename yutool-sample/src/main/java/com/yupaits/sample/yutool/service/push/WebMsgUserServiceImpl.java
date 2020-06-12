@@ -1,4 +1,4 @@
-package com.yupaits.sample.yutool.service.impl;
+package com.yupaits.sample.yutool.service.push;
 
 import com.yupaits.yutool.commons.service.OptService;
 import com.yupaits.yutool.push.support.webmsg.WebMsgUserService;

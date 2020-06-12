@@ -1,5 +1,6 @@
 package com.yupaits.sample.yutool.controller;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yupaits.sample.yutool.dto.AnimalDto;
 import com.yupaits.sample.yutool.query.AnimalQuery;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author yupaits
  * @date 2020-05-13
  */
+@DS("#header.tenantName")
 @RestController
 @RequestMapping("/Animal")
 @Api(tags = "动物接口")

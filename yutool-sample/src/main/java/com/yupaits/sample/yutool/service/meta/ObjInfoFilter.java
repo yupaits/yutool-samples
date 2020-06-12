@@ -1,4 +1,4 @@
-package com.yupaits.sample.yutool.service.impl;
+package com.yupaits.sample.yutool.service.meta;
 
 import com.google.common.collect.Lists;
 import com.yupaits.yutool.metadata.mapper.MetaFieldSecureMapper;
