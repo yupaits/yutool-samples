@@ -5,7 +5,7 @@ import com.yupaits.yutool.commons.exception.BusinessException;
 import com.yupaits.yutool.commons.utils.ValidateUtils;
 import com.yupaits.yutool.commons.utils.checker.params.ParamsCheckProcedure;
 import com.yupaits.yutool.commons.utils.serializer.LongDeserializer;
-import com.yupaits.yutool.orm.base.BaseDto;
+import com.yupaits.yutool.metadata.base.BaseMetaDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(description = "动物Dto对象")
-public class AnimalDto extends BaseDto<Long> {
+public class AnimalDto extends BaseMetaDto<Long> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")

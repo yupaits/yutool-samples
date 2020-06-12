@@ -1,6 +1,6 @@
 package com.yupaits.sample.yutool.vo;
 
-import com.yupaits.yutool.orm.base.BaseVo;
+import com.yupaits.yutool.metadata.base.BaseMetaVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "动物Vo对象")
-public class AnimalVo extends BaseVo<Long> {
+public class AnimalVo extends BaseMetaVo<Long> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "昵称")

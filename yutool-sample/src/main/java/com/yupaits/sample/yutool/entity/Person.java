@@ -20,7 +20,7 @@ public class Person extends BaseModel<Long, Person> {
     /**
      * 姓名
      */
-    @AuditLog(description = "姓名")
+    @AuditLog(description = "姓名", autoApproved = true)
     private String name;
 
     /**
