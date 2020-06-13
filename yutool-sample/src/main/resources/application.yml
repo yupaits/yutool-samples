@@ -2,6 +2,10 @@ server:
   port: 8000
 
 spring:
+  servlet:
+    multipart:
+      maxFileSize: 1024MB
+      maxRequestSize: 10240MB
   datasource:
     dynamic:
       primary: yutool_sample
