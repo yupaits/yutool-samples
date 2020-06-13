@@ -10,9 +10,11 @@ import com.yupaits.yutool.file.exception.DownloadException;
 import com.yupaits.yutool.file.exception.UploadException;
 import com.yupaits.yutool.file.support.DownloadProps;
 import com.yupaits.yutool.file.support.UploadProps;
+import com.yupaits.yutool.file.support.WatermarkType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import net.coobird.thumbnailator.geometry.Positions;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,8 +71,29 @@ public class FileController {
     @PostMapping("/image")
     public Result<String> uploadImage(@RequestParam("image") MultipartFile image,
                                       @ApiParam(value = "文件存储分组", required = true) @PathVariable String storeGroup,
-                                      UploadProps uploadProps) throws UploadException {
-        uploadProps.setStoreGroup(storeGroup);
+                                      @ApiParam("是否保存缩略图") @RequestParam(required = false, defaultValue = "false") boolean thumb,
+                                      @ApiParam("缩略图宽度") @RequestParam(required = false, defaultValue = "0") int width,
+                                      @ApiParam("缩略图高度") @RequestParam(required = false, defaultValue = "0") int height,
+                                      @ApiParam("图片缩放比例") @RequestParam(required = false, defaultValue = "1.0") double scale,
+                                      @ApiParam("是否附带水印") @RequestParam(required = false, defaultValue = "false") boolean withWatermark,
+                                      @ApiParam("水印类型") @RequestParam(required = false) WatermarkType watermarkType,
+                                      @ApiParam("水印文件路径") @RequestParam(required = false) String watermarkPic,
+                                      @ApiParam("水印文字") @RequestParam(required = false) String watermarkText,
+                                      @ApiParam("水印透明度（取值范围0-1，0表示完全透明）") @RequestParam(required = false, defaultValue = "1.0") float watermarkOpacity,
+                                      @ApiParam("水印位置") @RequestParam(required = false) Positions watermarkPos) throws UploadException {
+        UploadProps uploadProps = UploadProps.builder()
+                .storeGroup(storeGroup)
+                .thumb(thumb)
+                .width(width)
+                .height(height)
+                .scale(scale)
+                .withWatermark(withWatermark)
+                .watermarkType(watermarkType)
+                .watermarkPic(watermarkPic)
+                .watermarkText(watermarkText)
+                .watermarkOpacity(watermarkOpacity)
+                .watermarkPos(watermarkPos)
+                .build();
         return uploadTemplate.resultUploadImage(image, uploadProps);
     }
 
@@ -78,15 +101,59 @@ public class FileController {
     @PostMapping("/image/batch")
     public Result<Map<String, String>> uploadBatchImage(@RequestParam("images")List<MultipartFile> images,
                                                         @ApiParam(value = "文件存储分组", required = true) @PathVariable String storeGroup,
-                                                        UploadProps uploadProps) throws UploadException {
-        uploadProps.setStoreGroup(storeGroup);
+                                                        @ApiParam("是否保存缩略图") @RequestParam(required = false, defaultValue = "false") boolean thumb,
+                                                        @ApiParam("缩略图宽度") @RequestParam(required = false, defaultValue = "0") int width,
+                                                        @ApiParam("缩略图高度") @RequestParam(required = false, defaultValue = "0") int height,
+                                                        @ApiParam("图片缩放比例") @RequestParam(required = false, defaultValue = "1.0") double scale,
+                                                        @ApiParam("是否附带水印") @RequestParam(required = false, defaultValue = "false") boolean withWatermark,
+                                                        @ApiParam("水印类型") @RequestParam(required = false) WatermarkType watermarkType,
+                                                        @ApiParam("水印文件路径") @RequestParam(required = false) String watermarkPic,
+                                                        @ApiParam("水印文字") @RequestParam(required = false) String watermarkText,
+                                                        @ApiParam("水印透明度（取值范围0-1，0表示完全透明）") @RequestParam(required = false, defaultValue = "1.0") float watermarkOpacity,
+                                                        @ApiParam("水印位置") @RequestParam(required = false) Positions watermarkPos) throws UploadException {
+        UploadProps uploadProps = UploadProps.builder()
+                .storeGroup(storeGroup)
+                .thumb(thumb)
+                .width(width)
+                .height(height)
+                .scale(scale)
+                .withWatermark(withWatermark)
+                .watermarkType(watermarkType)
+                .watermarkPic(watermarkPic)
+                .watermarkText(watermarkText)
+                .watermarkOpacity(watermarkOpacity)
+                .watermarkPos(watermarkPos)
+                .build();
         return uploadTemplate.resultUploadBatchImage(images, uploadProps);
     }
 
     @ApiOperation("下载文件")
     @GetMapping("/**")
     public void download(HttpServletRequest request, HttpServletResponse response,
-                         DownloadProps downloadProps) throws IOException, DownloadException {
+                         @ApiParam("是否下载缩略图") @RequestParam(required = false, defaultValue = "false") boolean thumb,
+                         @ApiParam("缩略图宽度") @RequestParam(required = false, defaultValue = "0") int width,
+                         @ApiParam("缩略图高度") @RequestParam(required = false, defaultValue = "0") int height,
+                         @ApiParam("图片质量（压缩比，如0.8表示压缩比为80%）") @RequestParam(required = false, defaultValue = "1.0") float quality,
+                         @ApiParam("图片缩放比例") @RequestParam(required = false, defaultValue = "1.0") double scale,
+                         @ApiParam("是否附带水印") @RequestParam(required = false, defaultValue = "false") boolean withWatermark,
+                         @ApiParam("水印类型") @RequestParam(required = false) WatermarkType watermarkType,
+                         @ApiParam("水印文件路径") @RequestParam(required = false) String watermarkPic,
+                         @ApiParam("水印文字") @RequestParam(required = false) String watermarkText,
+                         @ApiParam("水印透明度（取值范围0-1，0表示完全透明）") @RequestParam(required = false, defaultValue = "1.0") float watermarkOpacity,
+                         @ApiParam("水印位置") @RequestParam(required = false) Positions watermarkPos) throws IOException, DownloadException {
+        DownloadProps downloadProps = DownloadProps.builder()
+                .thumb(thumb)
+                .width(width)
+                .height(height)
+                .quality(quality)
+                .scale(scale)
+                .withWatermark(withWatermark)
+                .watermarkType(watermarkType)
+                .watermarkPic(watermarkPic)
+                .watermarkText(watermarkText)
+                .watermarkOpacity(watermarkOpacity)
+                .watermarkPos(watermarkPos)
+                .build();
         String fullPath = StringUtils.substringAfter(StringUtils.substringAfter(request.getRequestURI(), UPLOAD_PATH_PREFIX), PATH_SEPARATOR);
         downloadTemplate.downloadFile(response, fullPath, downloadProps);
     }
