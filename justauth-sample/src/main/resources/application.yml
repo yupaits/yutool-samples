@@ -1,0 +1,12 @@
+server:
+  port: 8150
+
+justauth:
+  enabled: true
+  type:
+    github:
+      client-id: 56***52
+      client-secret: 1a***ea
+      redirect-uri: http://localhost:8150/oauth/github/callback
+  cache:
+    type: default

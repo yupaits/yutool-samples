@@ -24,3 +24,4 @@
 |**seata-sample** order-service|Seate分布式事务 订单服务|8132|
 |**seata-sample** storage-service|Seate分布式事务 库存服务|8133|
 |ldap-sample|Ldap示例|8140|
+|justauth-sample|justauth第三方登录示例|8150|
