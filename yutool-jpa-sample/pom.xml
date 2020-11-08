@@ -11,7 +11,6 @@
         <artifactId>yutool-parent</artifactId>
         <groupId>com.yupaits</groupId>
         <version>1.2.1</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <name>yutool-jpa-sample</name>
