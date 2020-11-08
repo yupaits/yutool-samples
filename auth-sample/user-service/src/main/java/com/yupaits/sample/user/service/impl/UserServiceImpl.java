@@ -96,4 +96,9 @@ public class UserServiceImpl extends BaseResultServiceImpl<Long, User, UserMappe
         queryWrapper.eq("username", username);
         return resultOne(queryWrapper, VoProps.with(true, false, false));
     }
+
+    @Override
+    public boolean save(User entity) {
+        return super.save(entity);
+    }
 }
