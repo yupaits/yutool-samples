@@ -36,6 +36,7 @@
         <module>spring-cloud-alibaba-sample</module>
         <module>ldap-sample</module>
         <module>justauth-sample</module>
+        <module>yutool-jpa-sample</module>
     </modules>
 
 </project>

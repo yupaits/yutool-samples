@@ -3,6 +3,7 @@
 |示例应用名|简介|端口|
 |---|---|---|
 |**yutool-sample**|yutool组件综合示例|8000|
+|**yutool-jpa-sample**|yutool组件综合示例|8001|
 |apollo-sample|apollo配置中心客户端示例|8010|
 |elk-log-sample|elk日志收集示例|8020|
 |prometheus-sample|prometheus整合示例|8030|
